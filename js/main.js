@@ -48,7 +48,7 @@
 	var fragmentShader = document.getElementById( 'fragmentShaderDepth' ).textContent;
 
 	// cube mesh
-	var cubeGeometry = new THREE.BoxGeometry( 3, 3, 3 );
+	var cubeGeometry = new THREE.BoxGeometry( 2, 2, 2 );
 	var cube = new THREE.Mesh( cubeGeometry, cubeMaterial);
 	cube.position.set( 0, 0, 0 );
 	cube.castShadow = true;
