@@ -41,21 +41,26 @@
 	cubeTexture.wrapS = cubeTexture.wrapT = THREE.RepeatWrapping;
 	cubeTexture.anisotropy = 16;
 
-	var cubeMaterial = new THREE.MeshPhongMaterial( { alphaTest: 0.5, color: 0xffffff, specular: 0x030303, emissive: 0x111111, shiness: 10, map: cubeTexture, side: THREE.DoubleSide } );
+	var cubeMaterial = new THREE.MeshPhongMaterial( { alphaTest: 0.5, color: 0x336699, specular: 0x336699, emissive: 0x111111, shiness: 10, map: cubeTexture, side: THREE.DoubleSide } );
 
 	var uniforms = { texture:  { type: "t", value: cubeTexture } };
 	var vertexShader = document.getElementById( 'vertexShaderDepth' ).textContent;
 	var fragmentShader = document.getElementById( 'fragmentShaderDepth' ).textContent;
 
-	// cube mesh
-	var cubeGeometry = new THREE.BoxGeometry( 2, 2, 2 );
-	var cube = new THREE.Mesh( cubeGeometry, cubeMaterial);
-	cube.position.set( 0, 0, 0 );
-	cube.castShadow = true;
-	cube.receiveShadow = true;
-	scene.add( cube );
+	var cubes = [];
 
-	cube.customDepthMaterial = new THREE.ShaderMaterial( { uniforms: uniforms, vertexShader: vertexShader, fragmentShader: fragmentShader } );
+	for (var i = 0, len = 66; i < len; i++) {
+		// cube mesh
+		var cubeGeometry = new THREE.BoxGeometry( Math.random() * (i * 0.05), Math.random() * (i * 0.05), Math.random() * (i * 0.05));
+		var cube = new THREE.Mesh( cubeGeometry, cubeMaterial);
+		cube.position.set( -2 + (Math.random() * (i * 0.11)), -2 + (Math.random() * (i * 0.11)), -2 + (Math.random() * (i * 0.11)) );
+		cube.castShadow = true;
+		cube.receiveShadow = true;
+		scene.add( cube );
+
+		cube.customDepthMaterial = new THREE.ShaderMaterial( { uniforms: uniforms, vertexShader: vertexShader, fragmentShader: fragmentShader } );
+		cubes.push(cube);
+	}
 
 	function init(){
 		// var objectAnimation = new THREE.Animation(cube, 'oscillateX');
@@ -71,15 +76,16 @@
 	var left = -1;
 	var right = 1;
 
-	function oscillateX() {
+	function oscillateX(object, time) {
 	  
 	}
 
 	function renderObject(time) {
-	  cube.rotation.x += 0.01;
-	  cube.rotation.y += 0.01;
-	  cube.rotation.z += Math.sin(0.01);
-	  oscillateX(time);
+		for (var i = 0, len = cubes.length; i < len; i++) {
+			cubes[i].rotation.x += 0.01;
+	  		cubes[i].rotation.y += 0.01;
+	  		oscillateX(cubes[i], time);
+		}
 	}
 
 	function render(time) {
