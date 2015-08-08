@@ -82,8 +82,8 @@
 
 	function renderObject(time) {
 		for (var i = 0, len = cubes.length; i < len; i++) {
-			cubes[i].rotation.x += (i % 2 === 0) ? -0.01 * Math.random() : 0.01 * Math.random();
-	  		cubes[i].rotation.y += (i % 2 === 0) ? -0.01 * Math.random() : 0.01 * Math.random();
+			cubes[i].rotation.x += (i % 2 === 0) ? -0.1 : 0.1;
+	  		cubes[i].rotation.y += (i % 2 === 0) ? -0.1 : 0.1;
 	  		oscillateX(cubes[i], time);
 		}
 	}
